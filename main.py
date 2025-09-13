@@ -2,10 +2,10 @@ from flask import Flask, render_template, jsonify, request, session
 import os
 
 app = Flask(__name__)
-# Set a strong secret key for session management
-app.secret_key = os.urandom(24)
+# Use environment variable for secret key with a fallback
+app.secret_key = os.environ.get('SECRET_KEY') or os.urandom(24)
 # Configure session to be more secure
-app.config['SESSION_COOKIE_SECURE'] = False  # Set to True if using HTTPS
+app.config['SESSION_COOKIE_SECURE'] = os.environ.get('PRODUCTION', 'false').lower() == 'true'
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['PERMANENT_SESSION_LIFETIME'] = 1800  # 30 minutes
 
@@ -67,4 +67,8 @@ def view_cart():
     return render_template('cart.html', cart_items=cart_items, total=total)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    # Get port from environment variable with a fallback to 10000
+    port = int(os.environ.get('PORT', 10000))
+    # In production, debug should be False
+    debug = os.environ.get('PRODUCTION', 'false').lower() != 'true'
+    app.run(host='0.0.0.0', port=port, debug=debug)

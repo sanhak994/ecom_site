@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ecom-site
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn main:app
+    envVars:
+      - key: PRODUCTION
+        value: true
+      - key: SECRET_KEY
+        generateValue: true
+    autoDeploy: true
