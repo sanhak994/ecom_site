@@ -31,6 +31,12 @@
                 <button type="submit" class="search-button">Search</button>
             </form>
         </div>
+        <div class="cart-container">
+            <a href="{{ url_for('view_cart') }}" class="cart-button">
+                <span class="cart-text">Cart</span>
+                <span class="cart-count">0</span>
+            </a>
+        </div>
     </nav>
 
     <main class="content">
@@ -42,6 +48,18 @@
         document.querySelector('.nav-toggle').addEventListener('click', function() {
             document.querySelector('.nav-items').classList.toggle('active');
         });
+
+        // Update cart count on page load
+        fetch('/cart/count')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('.cart-count').textContent = data.count;
+            });
+
+        // Function to update cart count
+        function updateCartCount(count) {
+            document.querySelector('.cart-count').textContent = count;
+        }
     </script>
 </body>
 </html>

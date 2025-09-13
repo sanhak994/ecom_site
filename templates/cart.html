@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - E-Commerce Site{% endblock %}
+
+{% block content %}
+<div class="cart-page">
+    <h1>Shopping Cart</h1>
+    {% if cart_items %}
+        <div class="cart-table">
+            <div class="cart-header">
+                <div class="cart-col">Product</div>
+                <div class="cart-col">Name</div>
+                <div class="cart-col">Price</div>
+                <div class="cart-col">Action</div>
+            </div>
+            {% for item in cart_items %}
+            <div class="cart-row" data-item-id="{{ item.id }}">
+                <div class="cart-col">
+                    <img src="{{ item.image }}" alt="{{ item.name }}" class="cart-product-image">
+                </div>
+                <div class="cart-col">{{ item.name }}</div>
+                <div class="cart-col">${{ item.price }}</div>
+                <div class="cart-col">
+                    <button class="remove-item-btn" data-item-id="{{ item.id }}">Remove</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount">${{ "%.2f"|format(total) }}</span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    {% else %}
+        <div class="empty-cart">
+            <p>Your cart is empty</p>
+            <a href="{{ url_for('home') }}" class="continue-shopping-btn">Continue Shopping</a>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    // Remove item from cart
+    document.querySelectorAll('.remove-item-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.itemId;
+            fetch('/cart/remove', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: itemId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update cart count in navigation
+                    updateCartCount(data.cart_count);
+                    
+                    // Remove the item row from the cart
+                    const row = this.closest('.cart-row');
+                    row.remove();
+                    
+                    // If cart is empty, reload the page to show empty cart message
+                    if (data.cart_count === 0) {
+                        location.reload();
+                    } else {
+                        // Recalculate total
+                        updateCartTotal();
+                    }
+                }
+            });
+        });
+    });
+
+    // Function to update cart total
+    function updateCartTotal() {
+        const prices = Array.from(document.querySelectorAll('.cart-row')).map(row => {
+            const priceText = row.querySelector('.cart-col:nth-child(3)').textContent;
+            return parseFloat(priceText.replace('$', ''));
+        });
+        const total = prices.reduce((sum, price) => sum + price, 0);
+        document.querySelector('.total-amount').textContent = `$${total.toFixed(2)}`;
+    }
+</script>
+{% endblock %}
