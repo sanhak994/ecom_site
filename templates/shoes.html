@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Shoes - E-Commerce Site{% endblock %}
+
+{% block content %}
+<h1>Footwear Collection</h1>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/running_shoes.png') }}" alt="Shoe Item 1" class="product-image">
+        <h3>Running Shoes</h3>
+        <p>High-performance running shoes for athletes.</p>
+        <p class="price">$119.99</p>
+    </div>
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/sneakers.png') }}" alt="Shoe Item 2" class="product-image">
+        <h3>Casual Sneakers</h3>
+        <p>Comfortable everyday sneakers with style.</p>
+        <p class="price">$89.99</p>
+    </div>
+</div>
+{% endblock %}

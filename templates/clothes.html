@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Clothes - E-Commerce Site{% endblock %}
+
+{% block content %}
+<h1>Clothes Collection</h1>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/tshirt.png') }}" alt="Clothing Item 1" class="product-image">
+        <h3>Stylish T-Shirt</h3>
+        <p>Comfortable and trendy t-shirt perfect for any occasion.</p>
+        <p class="price">$29.99</p>
+    </div>
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/jeans.png') }}" alt="Clothing Item 2" class="product-image">
+        <h3>Designer Jeans</h3>
+        <p>Premium quality jeans with perfect fit.</p>
+        <p class="price">$79.99</p>
+    </div>
+</div>
+{% endblock %}

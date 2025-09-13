@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Popular - E-Commerce Site{% endblock %}
+
+{% block content %}
+<h1>Popular Items</h1>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/jacket.png') }}" alt="Popular Item 1" class="product-image">
+        <h3>Popular Item 1</h3>
+        <p>Our best-selling item this season. Customer favorite!</p>
+        <p class="price">$199.99</p>
+    </div>
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/shirt.png') }}" alt="Popular Item 2" class="product-image">
+        <h3>Popular Item 2</h3>
+        <p>Highly rated product with exceptional quality.</p>
+        <p class="price">$159.99</p>
+    </div>
+</div>
+{% endblock %}

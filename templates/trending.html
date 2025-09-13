@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Trending - E-Commerce Site{% endblock %}
+
+{% block content %}
+<h1>Trending Items</h1>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/lux_watch.png') }}" alt="Trending Item 1" class="product-image">
+        <h3>Trending Item 1</h3>
+        <p>Hot and trendy item that everyone's talking about. Limited stock available!</p>
+        <p class="price">$149.99</p>
+    </div>
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/sunglasses.png') }}" alt="Trending Item 2" class="product-image">
+        <h3>Trending Item 2</h3>
+        <p>The latest fashion statement piece that you don't want to miss.</p>
+        <p class="price">$89.99</p>
+    </div>
+</div>
+{% endblock %}

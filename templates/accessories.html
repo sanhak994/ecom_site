@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Accessories - E-Commerce Site{% endblock %}
+
+{% block content %}
+<h1>Accessories Collection</h1>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/lux_watch.png') }}" alt="Accessory 1" class="product-image">
+        <h3>Luxury Watch</h3>
+        <p>Elegant timepiece for the modern individual.</p>
+        <p class="price">$299.99</p>
+    </div>
+    <div class="product-card">
+        <img src="{{ url_for('static', filename='images/sunglasses.png') }}" alt="Accessory 2" class="product-image">
+        <h3>Designer Sunglasses</h3>
+        <p>Stylish protection for your eyes.</p>
+        <p class="price">$159.99</p>
+    </div>
+</div>
+{% endblock %}
