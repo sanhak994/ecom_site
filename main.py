@@ -1,7 +1,13 @@
 from flask import Flask, render_template, jsonify, request, session
+import os
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key'  # Change this to a secure secret key in production
+# Set a strong secret key for session management
+app.secret_key = os.urandom(24)
+# Configure session to be more secure
+app.config['SESSION_COOKIE_SECURE'] = False  # Set to True if using HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['PERMANENT_SESSION_LIFETIME'] = 1800  # 30 minutes
 
 # Initialize shopping cart in session if it doesn't exist
 @app.before_request
@@ -61,4 +67,4 @@ def view_cart():
     return render_template('cart.html', cart_items=cart_items, total=total)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
